@@ -1,0 +1,25 @@
+{
+  "name": "json-server-demo",
+  "version": "1.0.0",
+  "description": "this is website demo powered by json-server",
+  "main": "index.js",
+  "scripts": {
+    "start": "json-server --watch db.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidkoojohn/json-server-demo.git"
+  },
+  "keywords": [
+    "json-server-demo"
+  ],
+  "author": "davidkoojohn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davidkoojohn/json-server-demo/issues"
+  },
+  "homepage": "https://github.com/davidkoojohn/json-server-demo#readme",
+  "dependencies": {
+    "json-server": "^0.15.1"
+  }
+}
