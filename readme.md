@@ -2,16 +2,23 @@
 
 > This is website api demo powered by json-server.
 
-# Build Setup
-## Install dependencies
+## Project setup
+
+### Install dependencies
 ```
 yarn
 ```
-## Serve with hot reload at localhost:3000
+
+### Compiles and hot-reloads for development
 ```
 yarn start
 ```
 
-# License
-[MIT](https://davidkoojohn.github.io)
+### Compiles and minifies for production
+```
+yarn build
+```
 
+## License
+
+[MIT](https://davidkoojohn.github.io)
