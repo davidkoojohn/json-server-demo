@@ -5,61 +5,38 @@
     </el-header>
     <el-container class="content">
       <el-aside width="200px" class="side-bar">
-        <el-menu :default-openeds="['1', '3']">
+        <el-menu :default-openeds="['1']">
           <el-submenu index="1">
-            <template slot="title"><i class="el-icon-message"></i>导航一</template>
-            <el-menu-item-group>
-              <template slot="title">分组一</template>
-              <el-menu-item index="1-1">选项1</el-menu-item>
-              <el-menu-item index="1-2">选项2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-              <el-menu-item index="1-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="1-4">
-              <template slot="title">选项4</template>
-              <el-menu-item index="1-4-1">选项4-1</el-menu-item>
-            </el-submenu>
-          </el-submenu>
-          <el-submenu index="2">
-            <template slot="title"><i class="el-icon-menu"></i>导航二</template>
-            <el-menu-item-group>
-              <template slot="title">分组一</template>
-              <el-menu-item index="2-1">选项1</el-menu-item>
-              <el-menu-item index="2-2">选项2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-              <el-menu-item index="2-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="2-4">
-              <template slot="title">选项4</template>
-              <el-menu-item index="2-4-1">选项4-1</el-menu-item>
-            </el-submenu>
-          </el-submenu>
-          <el-submenu index="3">
-            <template slot="title"><i class="el-icon-setting"></i>导航三</template>
-            <el-menu-item-group>
-              <template slot="title">分组一</template>
-              <el-menu-item index="3-1">选项1</el-menu-item>
-              <el-menu-item index="3-2">选项2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-              <el-menu-item index="3-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="3-4">
-              <template slot="title">选项4</template>
-              <el-menu-item index="3-4-1">选项4-1</el-menu-item>
-            </el-submenu>
+            <template slot="title"><i class="el-icon-s-data"></i>TodoList</template>
+            <el-menu-item index="1-1">TodoList管理</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
       <el-main>
-        <el-table :data="tableData">
-          <el-table-column prop="date" label="日期" width="140">
-          </el-table-column>
-          <el-table-column prop="name" label="姓名" width="120">
-          </el-table-column>
-          <el-table-column prop="address" label="地址">
+        <el-table :data="dataList" stripe border>
+          <el-table-column prop="id" label="#" width="100"/>
+          <el-table-column prop="title" label="标题" width="200"/>
+          <el-table-column prop="description" label="描述"/>
+          <el-table-column prop="status" label="状态" width="120"/>
+          <el-table-column label="操作" width="180">
+            <template slot="header" slot-scope="scope">
+              <div class="opt">
+                <span>操作</span>
+                <el-button
+                  type="primary"
+                  size="small"
+                  class="create"
+                  @click="createData"
+                >
+                  新建 <i class="el-icon-plus"></i>
+                </el-button>
+              </div>
+            </template>
+            <template slot-scope="scope">
+              <el-button icon="el-icon-view" circle @click="handleClick(scope.row)"></el-button>
+              <el-button type="primary" icon="el-icon-edit" circle></el-button>
+              <el-button type="danger" icon="el-icon-delete" circle></el-button>
+            </template>
           </el-table-column>
         </el-table>
       </el-main>
@@ -68,15 +45,33 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   data() {
-    const item = {
-      date: '2016-05-02',
-      name: 'Name',
-      address: '地址'
-    };
-    return {
-      tableData: Array(20).fill(item)
+    return {}
+  },
+  computed: {
+    ...mapGetters('todoModule', ['page', 'dataList'])
+  },
+  async beforeMount() {
+    await this.getTodo()
+    console.log(this.dataList)
+  },
+  methods: {
+    ...mapActions('todoModule', ['createTodo', 'getTodo']),
+    handleClick(row) {
+      console.log(row)
+    },
+    async createData() {
+      await this.createTodo({
+        data: {
+          "title": "a title",
+          "description": "this is description",
+          "status": 0
+        },
+      })
+      await this.getTodo()
     }
   }
 }
@@ -113,6 +108,16 @@ body {
   .side-bar {
     background-color: rgb(238, 241, 246);
     color: #333;
+  }
+
+  .opt {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .create {
+      padding: .5em 3em;
+    }
   }
 }
 </style>
