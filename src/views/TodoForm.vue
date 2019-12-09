@@ -1,15 +1,23 @@
 <template>
-  <div class="todo-show-container">
-    <h1 class="h1">{{ objectId ? '编辑' : '创建' }}</h1>
+  <div class="todo-form-container">
+    <h1 class="h1" v-if="type === 'show'">详情</h1>
+    <h1 class="h1" v-else-if="type === 'edit'">编辑</h1>
+    <h1 class="h1" v-else-if="type === 'create'">创建</h1>
     <el-form :model="formField" :rules="rules" ref="formField" label-width="80px" class="form-area">
       <el-form-item label="标题" prop="title">
-        <el-input v-model="formField.title"></el-input>
+        <el-input v-model="formField.title" :disabled="type === 'show'"></el-input>
       </el-form-item>
       <el-form-item label="描述" prop="description">
-        <el-input type="textarea" v-model="formField.description" class="desc"></el-input>
+        <el-input type="textarea" v-model="formField.description" :disabled="type === 'show'" class="desc"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('formField')">{{ objectId ? '确定提交' : '立即创建' }}</el-button>
+        <router-link v-if="type === 'show'" :to="{ name: 'todo-edit', params: {id: `${objectId}`}}">
+          <el-button type="primary">编辑</el-button>
+        </router-link>
+        <el-button v-else type="primary" @click="submitForm('formField')">
+          <template v-if="type === 'create'">立即创建</template>
+          <template v-else>确定提交</template>
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -17,7 +25,11 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-
+const optType = {
+  'todo-create': 'create',
+  'todo-show': 'show',
+  'todo-edit': 'edit',
+}
 export default {
   name: 'TodoCreate',
   data() {
@@ -35,16 +47,13 @@ export default {
       }
     }
   },
-  computed: {},
-  created() {
-    const { name } = this.$route
-    switch (name) {
-      case 'todo-create':
-        break
-      case 'todo-edit':
-        this.objectId = this.$route.params.id
-        break
+  computed: {
+    type() {
+      return optType[this.$route.name]
     }
+  },
+  created() {
+    if (this.type !== 'create') this.objectId = this.$route.params.id
   },
   methods: {
     submitForm(formName) {
@@ -65,7 +74,7 @@ export default {
 </script>
 
 <style lang="scss">
-.todo-show-container{
+.todo-form-container{
   .h1 {
     font-size: 40px;
     margin: 0;

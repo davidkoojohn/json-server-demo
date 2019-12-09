@@ -28,7 +28,7 @@ const routes = [
   {
     path: '/todo/:id',
     name: 'todo-show',
-    component: () => import('../views/TodoShow')
+    component: () => import('../views/TodoForm')
   },
   {
     path: '/todo/:id/edit',
