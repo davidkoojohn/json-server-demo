@@ -1,5 +1,5 @@
 <template>
-  <div class="todo-list-container">
+  <div class="todo-container">
     <el-table :data="dataList" stripe border>
       <el-table-column prop="id" label="#" width="100"/>
       <el-table-column prop="title" label="标题" width="200"/>
@@ -48,7 +48,7 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: 'TodoList',
+  name: 'Todo',
   data() {
     return {}
   },
@@ -60,8 +60,14 @@ export default {
   },
   methods: {
     ...mapActions('todoModule', ['createTodo', 'getTodo']),
-    handleClick(row) {
-      console.log(row)
+    handleClick({id}) {
+      console.log(id)
+      this.$router.push({
+        name: 'todo-show',
+        params: {
+          id
+        }
+      })
     },
     async createData() {
       await this.createTodo({
@@ -78,15 +84,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.todo-list-container{
+.todo-container{
   .opt {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    .create {
-      /*padding: .5em 3em;*/
-    }
   }
 }
 </style>

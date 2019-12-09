@@ -18,7 +18,12 @@ const routes = [
   {
     path: '/todo',
     name: 'todo',
-    component: () => import('../views/TodoList')
+    component: () => import('../views/Todo')
+  },
+  {
+    path: '/todo/:id',
+    name: 'todo-show',
+    component: () => import('../views/TodoShow')
   },
 ]
 
