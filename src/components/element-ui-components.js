@@ -18,7 +18,10 @@ import {
   DropdownItem,
   Main,
   Table,
-  TableColumn
+  TableColumn,
+  Form,
+  FormItem,
+  Input
 } from 'element-ui';
 
 Vue.use(Button);
@@ -36,6 +39,9 @@ Vue.use(DropdownItem);
 Vue.use(Main);
 Vue.use(Table);
 Vue.use(TableColumn);
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Input);
 
 Vue.prototype.$loading = Loading.service;
 Vue.prototype.$msgbox = MessageBox;

@@ -9,14 +9,15 @@
         <template slot="header" slot-scope="scope">
           <div class="opt">
             <span>操作</span>
-            <el-button
-              type="primary"
-              size="small"
-              class="create"
-              @click="createData"
-            >
-              新建 <i class="el-icon-plus"></i>
-            </el-button>
+            <router-link :to="{name: 'todo-create'}">
+              <el-button
+                type="primary"
+                size="small"
+                class="create"
+              >
+                新建 <i class="el-icon-plus"></i>
+              </el-button>
+            </router-link>
           </div>
         </template>
         <template slot-scope="scope">
@@ -24,19 +25,21 @@
             icon="el-icon-view"
             circle
             size="small"
-            @click="handleClick(scope.row)"
+            @click="handleClick(scope.row, 'show')"
           />
           <el-button
             icon="el-icon-edit"
             circle
             size="small"
             type="primary"
+            @click="handleClick(scope.row, 'edit')"
           />
           <el-button
             icon="el-icon-delete"
             circle
             size="small"
             type="danger"
+            @click="handleClick(scope.row, 'delete')"
           />
         </template>
       </el-table-column>
@@ -60,14 +63,21 @@ export default {
   },
   methods: {
     ...mapActions('todoModule', ['createTodo', 'getTodo']),
-    handleClick({id}) {
-      console.log(id)
-      this.$router.push({
-        name: 'todo-show',
-        params: {
-          id
-        }
-      })
+    handleClick({id}, type) {
+      switch (type) {
+        case 'show':
+          this.$router.push({
+            name: 'todo-show',
+            params: {id},
+          })
+          break
+        case 'edit':
+          this.$router.push({
+            name: 'todo-edit',
+            params: {id}
+          })
+          break
+      }
     },
     async createData() {
       await this.createTodo({

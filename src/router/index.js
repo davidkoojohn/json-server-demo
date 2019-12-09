@@ -21,9 +21,19 @@ const routes = [
     component: () => import('../views/Todo')
   },
   {
+    path: '/todo/create',
+    name: 'todo-create',
+    component: () => import('../views/TodoForm')
+  },
+  {
     path: '/todo/:id',
     name: 'todo-show',
     component: () => import('../views/TodoShow')
+  },
+  {
+    path: '/todo/:id/edit',
+    name: 'todo-edit',
+    component: () => import('../views/TodoForm')
   },
 ]
 
