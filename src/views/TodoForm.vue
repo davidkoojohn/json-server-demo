@@ -36,7 +36,6 @@ export default {
   name: 'TodoCreate',
   data() {
     return {
-      objectId: null,
       formField: {
         title: '',
         description: '',
@@ -52,12 +51,18 @@ export default {
   computed: {
     type() {
       return optType[this.$route.name]
+    },
+    objectId() {
+      return this.$route.params.id
     }
   },
-  created() {
+  async created() {
     if (this.type !== 'create') {
-      this.objectId = this.$route.params.id
-      console.log(this.objectId)
+      try {
+        this.formField = await api.todo.getItem({id: this.objectId})
+      } catch (e) {
+        console.log(e)
+      }
     }
   },
   methods: {
@@ -79,7 +84,23 @@ export default {
               console.log(e)
             }
           } else {
-            // create
+            try {
+              await api.todo.edit({
+                id: this.formField.id,
+                data: {
+                  ...this.formField,
+                  status: 1,
+                },
+              })
+              this.$router.push({
+                name: 'todo-show',
+                params: {
+                  id: this.formField.id
+                }
+              })
+            } catch (e) {
+              console.log(e)
+            }
           }
         } else {
           return false;

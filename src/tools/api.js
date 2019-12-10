@@ -12,7 +12,9 @@ export default {
       return http.post(`/todo`, data);
     },
     edit({data, id}) {
-      return http.put(`/todo/${id}`, data);
+      return http.put(`/todo/${id}`, {
+        ...data
+      });
     },
     del({id}) {
       return http.delete(`/todo/${id}`);
