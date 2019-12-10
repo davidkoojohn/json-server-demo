@@ -55,7 +55,10 @@ export default {
     }
   },
   created() {
-    if (this.type !== 'create') this.objectId = this.$route.params.id
+    if (this.type !== 'create') {
+      this.objectId = this.$route.params.id
+      console.log(this.objectId)
+    }
   },
   methods: {
     submitForm(formName) {
