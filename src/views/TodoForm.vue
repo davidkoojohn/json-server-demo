@@ -25,6 +25,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import api from '../tools/api'
+
 const optType = {
   'todo-create': 'create',
   'todo-show': 'show',
@@ -57,10 +59,22 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          if (this.objectID) {
-            // edit
+          if (this.type === 'create') {
+            try {
+              await api.todo.create({
+                data: {
+                  ...this.formField,
+                  status: 1,
+                }
+              })
+              this.$router.push({
+                name: 'todo'
+              })
+            } catch (e) {
+              console.log(e)
+            }
           } else {
             // create
           }
