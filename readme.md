@@ -6,17 +6,22 @@
 
 ### Install dependencies
 ```
-yarn
+yarn || npm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-yarn start
+yarn start || npm run start
+```
+
+### Started db api
+```
+yarn db || npm run db
 ```
 
 ### Compiles and minifies for production
 ```
-yarn build
+yarn build || npm run build
 ```
 
 ## License

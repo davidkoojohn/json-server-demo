@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "vue-cli-service serve & json-server --watch db.json",
+    "start": "vue-cli-service serve",
+    "db": "json-server --watch db.json",
     "build": "vue-cli-service build"
   },
   "dependencies": {
