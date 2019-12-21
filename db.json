@@ -8,8 +8,8 @@
     },
     {
       "title": "a title",
-      "description": "this is description",
-      "status": 0,
+      "description": "<h1><strong>this is description</strong></h1><ol><li>1</li><li>2</li><li>3</li></ol>",
+      "status": 1,
       "id": 7
     },
     {

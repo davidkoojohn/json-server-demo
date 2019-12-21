@@ -3,7 +3,11 @@
     <el-table :data="dataList" stripe border>
       <el-table-column prop="id" label="#" width="100"/>
       <el-table-column prop="title" label="标题" width="200"/>
-      <el-table-column prop="description" label="描述"/>
+      <el-table-column label="描述">
+        <template slot-scope="scope">
+          <div v-html="scope.row.description"></div>
+        </template>
+      </el-table-column>
       <el-table-column prop="status" label="状态" width="120"/>
       <el-table-column label="操作" width="150">
         <template slot="header" slot-scope="scope">

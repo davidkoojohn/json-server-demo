@@ -8,7 +8,11 @@
         <el-input v-model="formField.title" :disabled="type === 'show'"></el-input>
       </el-form-item>
       <el-form-item label="描述" prop="description">
-        <el-input type="textarea" v-model="formField.description" :disabled="type === 'show'" class="desc"></el-input>
+        <!--<el-input type="textarea" v-model="formField.description" :disabled="type === 'show'" class="desc"></el-input>-->
+        <div v-if="type === 'show'" class="desc">
+          <span v-html="formField.description"></span>
+        </div>
+        <quill-editor v-else v-model="formField.description" class="editor"/>
       </el-form-item>
       <el-form-item>
         <router-link v-if="type === 'show'" :to="{ name: 'todo-edit', params: {id: `${objectId}`}}">
@@ -24,8 +28,12 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
 import api from '../tools/api'
+
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+import { quillEditor } from 'vue-quill-editor'
 
 const optType = {
   'todo-create': 'create',
@@ -34,6 +42,9 @@ const optType = {
 }
 export default {
   name: 'TodoCreate',
+  components: {
+    quillEditor
+  },
   data() {
     return {
       formField: {
@@ -119,11 +130,21 @@ export default {
   }
 
   .form-area {
-    width: 500px;
     margin-top: 30px;
 
-    .desc .el-textarea__inner {
-      height: 100px;
+    .desc {
+      border-radius: 4px;
+      border: 1px solid #DCDFE6;
+
+      .el-textarea__inner {
+        height: 100px;
+      }
+    }
+  }
+
+  .editor {
+    .ql-container.ql-snow {
+      height: 200px;
     }
   }
 }
